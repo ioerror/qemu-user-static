@@ -1,6 +1,6 @@
 # qemu-user-static
 
-[![License](https://img.shields.io/github/license/ioerror/qemu-user-static.svg?style=flat-square)](./LICENSE) ![actions](https://github.com/ioerror/qemu-user-static/workflows/actions/badge.svg) [![Releases](https://img.shields.io/ioerror/commits-since/polyarch/qemu-user-static/latest.svg?style=flat-square)](https://github.com/ioerror/qemu-user-static/releases) [![Docker Hub](https://img.shields.io/docker/pulls/polyarch/qemu-user-static.svg?style=flat-square)](https://hub.docker.com/r/polyarch/qemu-user-static/)
+[![License](https://img.shields.io/githu/license/ioerror/qemu-user-static.svg?style=flat-square)](./LICENSE) ![actions](https://github.com/ioerror/qemu-user-static/workflows/actions/badge.svg) [![Releases](https://img.shields.io/github/commits-since/ioerror/qemu-user-static/latest?style=flat-square)](https://github.com/ioerror/qemu-user-static/releases) [![Docker Hub](https://img.shields.io/docker/pulls/polyarch/qemu-user-static.svg?style=flat-square)](https://hub.docker.com/r/polyarch/qemu-user-static/)
 
 ![](https://raw.githubusercontent.com/ioerror/dockerfile/master/logo.jpg)
 
