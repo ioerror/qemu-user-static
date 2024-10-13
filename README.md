@@ -84,7 +84,7 @@ The images have below tags.
 
 **Variables**
 
-* `$version`: Based QEMU's version.
+* `$version`: Base QEMU's version
 * `$from_arch`: Host architecture
 * `$to_arch`: Guest architecture
 
@@ -114,7 +114,7 @@ When same name's file `/proc/sys/fs/binfmt_misc/qemu-$arch` exists, the register
 $ docker run --rm --privileged polyarch/qemu-user-static [--reset][--help][-p yes][options]
 ```
 
-On below image, we can not specify `-p yes` (`--persistent yes`) option. Because an interpreter's existance is checked when registering a binfmt_misc entry. As the interpreter does not exist in the container, the register script finishes with an error.
+On below image, we can not specify `-p yes` (`--persistent yes`) option. Because an interpreter's existence is checked when registering a binfmt_misc entry. As the interpreter does not exist in the container, the register script finishes with an error.
 
 ```
 $ docker run --rm --privileged polyarch/qemu-user-static:register [--reset][--help][options]
@@ -146,7 +146,7 @@ Usage: qemu-binfmt-conf.sh [--qemu-path PATH][--debian][--systemd CPU]
                       are cloned from the open file.
 ```
 
-You can run `/usr/bin/qemu-$arch-static` binary file` in the container.
+You can run `/usr/bin/qemu-$arch-static` binary file in the container.
 
 ```
 $ docker run --rm -t polyarch/qemu-user-static:x86_64-aarch64 /usr/bin/qemu-aarch64-static -help
