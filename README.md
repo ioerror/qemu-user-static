@@ -1,10 +1,10 @@
 # qemu-user-static
 
-[![License](https://img.shields.io/github/license/multiarch/qemu-user-static.svg?style=flat-square)](./LICENSE) ![actions](https://github.com/multiarch/qemu-user-static/workflows/actions/badge.svg) [![Releases](https://img.shields.io/github/commits-since/multiarch/qemu-user-static/latest.svg?style=flat-square)](https://github.com/multiarch/qemu-user-static/releases) [![Docker Hub](https://img.shields.io/docker/pulls/multiarch/qemu-user-static.svg?style=flat-square)](https://hub.docker.com/r/multiarch/qemu-user-static/)
+[![License](https://img.shields.io/github/license/polyarch/qemu-user-static.svg?style=flat-square)](./LICENSE) ![actions](https://github.com/ioerror/qemu-user-static/workflows/actions/badge.svg) [![Releases](https://img.shields.io/ioerror/commits-since/polyarch/qemu-user-static/latest.svg?style=flat-square)](https://github.com/ioerror/qemu-user-static/releases) [![Docker Hub](https://img.shields.io/docker/pulls/polyarch/qemu-user-static.svg?style=flat-square)](https://hub.docker.com/r/polyarch/qemu-user-static/)
 
-![](https://raw.githubusercontent.com/multiarch/dockerfile/master/logo.jpg)
+![](https://raw.githubusercontent.com/ioerror/dockerfile/master/logo.jpg)
 
-**multiarch/qemu-user-static** is to enable an execution of different multi-architecture containers by QEMU [<sup>1</sup>](#ref-1) and binfmt_misc [<sup>2</sup>](#ref-2).
+**polyarch/qemu-user-static** is to enable an execution of different multi-architecture containers by QEMU [<sup>1</sup>](#ref-1) and binfmt_misc [<sup>2</sup>](#ref-2).
 Here are examples with Docker [<sup>3</sup>](#ref-3).
 
 ## Getting started
@@ -16,7 +16,7 @@ x86_64
 $ docker run --rm -t arm64v8/ubuntu uname -m
 standard_init_linux.go:211: exec user process caused "exec format error"
 
-$ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+$ docker run --rm --privileged polyarch/qemu-user-static --reset -p yes
 
 $ docker run --rm -t arm64v8/ubuntu uname -m
 aarch64
@@ -50,7 +50,7 @@ x86_64
 Podman [<sup>4</sup>](#ref-4) also works.
 
 ```
-$ sudo podman run --rm --privileged multiarch/qemu-user-static --reset -p yes
+$ sudo podman run --rm --privileged polyarch/qemu-user-static --reset -p yes
 
 $ podman run --rm -t arm64v8/fedora uname -m
 aarch64
@@ -59,7 +59,7 @@ aarch64
 Singularity [<sup>5</sup>](#ref-5) also works.
 
 ```
-$ sudo singularity run docker://multiarch/qemu-user-static --reset -p yes
+$ sudo singularity run docker://polyarch/qemu-user-static --reset -p yes
 
 $ singularity run --cleanenv docker://arm64v8/fedora uname -m
 aarch64
@@ -67,20 +67,20 @@ aarch64
 
 ## Usage
 
-### multiarch/qemu-user-static images
+### polyarch/qemu-user-static images
 
-multiarch/qemu-user-static images are managed on the [Docker Hub](https://hub.docker.com/r/multiarch/qemu-user-static/) container repository.
+polyarch/qemu-user-static images are managed on the [Docker Hub](https://hub.docker.com/r/polyarch/qemu-user-static/) container repository.
 The images have below tags.
 
 **Images**
 
-1. `multiarch/qemu-user-static` image
-2. `multiarch/qemu-user-static:$version` images
-3. `multiarch/qemu-user-static:$from_arch-$to_arch` images
-4. `multiarch/qemu-user-static:$from_arch-$to_arch-$version` images
-5. `multiarch/qemu-user-static:$to_arch` images
-6. `multiarch/qemu-user-static:$to_arch-$version` images
-7. `multiarch/qemu-user-static:register` image
+1. `polyarch/qemu-user-static` image
+2. `polyarch/qemu-user-static:$version` images
+3. `polyarch/qemu-user-static:$from_arch-$to_arch` images
+4. `polyarch/qemu-user-static:$from_arch-$to_arch-$version` images
+5. `polyarch/qemu-user-static:$to_arch` images
+6. `polyarch/qemu-user-static:$to_arch-$version` images
+7. `polyarch/qemu-user-static:register` image
 
 **Variables**
 
@@ -90,11 +90,11 @@ The images have below tags.
 
 **Description**
 
-* `multiarch/qemu-user-static` image container includes both a register script to register binfmt_misc entries and all the `/usr/bin/qemu-$arch-static` binary files in the container in it. `multiarch/qemu-user-static` image is an alias of the latest version of `multiarch/qemu-user-static:$version` images.
-* `multiarch/qemu-user-static:$to_arch` images are aliases of `multiarch/qemu-user-static:x86_64-$to_arch`. `multiarch/qemu-user-static:$to_arch` images only include the `$to_arch`'s `/usr/bin/qemu-$to_arch-static` binary file in it. `multiarch/qemu-user-static:$to_arch` image is an alias of the latest version of `multiarch/qemu-user-static:$to_arch-$version` images.
-* `multiarch/qemu-user-static:register` image has only the register script binfmt_misc entries.
+* `polyarch/qemu-user-static` image container includes both a register script to register binfmt_misc entries and all the `/usr/bin/qemu-$arch-static` binary files in the container in it. `polyarch/qemu-user-static` image is an alias of the latest version of `polyarch/qemu-user-static:$version` images.
+* `polyarch/qemu-user-static:$to_arch` images are aliases of `polyarch/qemu-user-static:x86_64-$to_arch`. `polyarch/qemu-user-static:$to_arch` images only include the `$to_arch`'s `/usr/bin/qemu-$to_arch-static` binary file in it. `polyarch/qemu-user-static:$to_arch` image is an alias of the latest version of `polyarch/qemu-user-static:$to_arch-$version` images.
+* `polyarch/qemu-user-static:register` image has only the register script binfmt_misc entries.
 
-`multiarch/qemu-user-static` and `multiarch/qemu-user-static:register` images execute the register script that registers below kind of `/proc/sys/fs/binfmt_misc/qemu-$arch` files for all supported processors except the current one in it when running the container. See binfmt_misc manual [2] for detail of the files.
+`polyarch/qemu-user-static` and `polyarch/qemu-user-static:register` images execute the register script that registers below kind of `/proc/sys/fs/binfmt_misc/qemu-$arch` files for all supported processors except the current one in it when running the container. See binfmt_misc manual [2] for detail of the files.
 As the `/proc/sys/fs/binfmt_misc` are common between host and inside of container, the register script modifies the file on host.
 
 ```
@@ -111,13 +111,13 @@ The `--reset` option is implemented at the register script that executes `find /
 When same name's file `/proc/sys/fs/binfmt_misc/qemu-$arch` exists, the register command is failed with an error message "sh: write error: File exists".
 
 ```
-$ docker run --rm --privileged multiarch/qemu-user-static [--reset][--help][-p yes][options]
+$ docker run --rm --privileged polyarch/qemu-user-static [--reset][--help][-p yes][options]
 ```
 
 On below image, we can not specify `-p yes` (`--persistent yes`) option. Because an interpreter's existance is checked when registering a binfmt_misc entry. As the interpreter does not exist in the container, the register script finishes with an error.
 
 ```
-$ docker run --rm --privileged multiarch/qemu-user-static:register [--reset][--help][options]
+$ docker run --rm --privileged polyarch/qemu-user-static:register [--reset][--help][options]
 ```
 
 Then the register script executes QEMU's [scripts/qemu-binfmt-conf.sh](https://github.com/qemu/qemu/blob/master/scripts/qemu-binfmt-conf.sh) script with options.
@@ -149,34 +149,34 @@ Usage: qemu-binfmt-conf.sh [--qemu-path PATH][--debian][--systemd CPU]
 You can run `/usr/bin/qemu-$arch-static` binary file` in the container.
 
 ```
-$ docker run --rm -t multiarch/qemu-user-static:x86_64-aarch64 /usr/bin/qemu-aarch64-static -help
+$ docker run --rm -t polyarch/qemu-user-static:x86_64-aarch64 /usr/bin/qemu-aarch64-static -help
 usage: qemu-aarch64 [options] program [arguments...]
 Linux CPU emulator (compiled for aarch64 emulation)
 ...
 
-$ docker run --rm -t multiarch/qemu-user-static:x86_64-aarch64 /usr/bin/qemu-aarch64-static -version
+$ docker run --rm -t polyarch/qemu-user-static:x86_64-aarch64 /usr/bin/qemu-aarch64-static -version
 qemu-aarch64 version 4.0.0 (qemu-4.0.0-5.fc31)
 Copyright (c) 2003-2019 Fabrice Bellard and the QEMU Project developers
 
 
-$ docker run --rm -t multiarch/qemu-user-static:aarch64 /usr/bin/qemu-aarch64-static -help
+$ docker run --rm -t polyarch/qemu-user-static:aarch64 /usr/bin/qemu-aarch64-static -help
 usage: qemu-aarch64 [options] program [arguments...]
 Linux CPU emulator (compiled for aarch64 emulation)
 ...
 
-$ docker run --rm -t multiarch/qemu-user-static:aarch64 /usr/bin/qemu-aarch64-static -version
+$ docker run --rm -t polyarch/qemu-user-static:aarch64 /usr/bin/qemu-aarch64-static -version
 qemu-aarch64 version 4.0.0 (qemu-4.0.0-5.fc31)
 Copyright (c) 2003-2019 Fabrice Bellard and the QEMU Project developers
 ```
 
-`multiarch/qemu-user-static:$from_arch-$to_arch` images are used with `multiarch/qemu-user-static:register` image.
+`polyarch/qemu-user-static:$from_arch-$to_arch` images are used with `polyarch/qemu-user-static:register` image.
 Because when the binfmt_misc entry is registered without `-p` option, the interpreter needs to be put in the container.
 
 ```
-$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+$ docker run --rm --privileged polyarch/qemu-user-static:register --reset
 
 $ docker build --rm -t "test/integration/ubuntu" -<<EOF
-FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
+FROM polyarch/qemu-user-static:x86_64-aarch64 as qemu
 FROM arm64v8/ubuntu
 COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
 EOF
@@ -188,7 +188,7 @@ aarch64
 If you have `qemu-$arch-static` binary files on your local environment, you can set it to the container by `docker -v` volume mounted file.
 
 ```
-$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+$ docker run --rm --privileged polyarch/qemu-user-static:register --reset
 
 $ docker run --rm -t arm64v8/ubuntu uname -m
 standard_init_linux.go:211: exec user process caused "no such file or directory"
@@ -197,9 +197,9 @@ $ docker run --rm -t -v /usr/bin/qemu-aarch64-static:/usr/bin/qemu-aarch64-stati
 aarch64
 ```
 
-### multiarch compatible images [DEPRECATED]
+### polyarch compatible images [DEPRECATED]
 
-The concept of "compatible images" are deprecated because **multiarch/qemu-user-static** can build and run standard multi-architecture container images without the multiarch compatible images now. But you can refer the document [Compatible images](docs/compatible_images.md).
+The concept of "compatible images" are deprecated because **polyarch/qemu-user-static** can build and run standard multi-architecture container images without the polyarch compatible images now. But you can refer the document [Compatible images](docs/compatible_images.md).
 
 The compatible image is the one to add `/usr/bin/qemu-$arch-static` binary inside of the container based on the standard arch specific container.
 Last time, we could not register binfmt_misc entry with `flags: F` (persistent option).
@@ -207,7 +207,7 @@ When `flags: F` was not set, the interpreter always needed to be existed inside 
 
 ## Contributing
 
-We encourage you to contribute to **multiarch/qemu-user-static**! Please check out the [Contributing to multiarch/qemu-user-static guide](CONTRIBUTING.md) for guidelines about how to proceed.
+We encourage you to contribute to **polyarch/qemu-user-static**! Please check out the [Contributing to polyarch/qemu-user-static guide](CONTRIBUTING.md) for guidelines about how to proceed.
 
 See [Developers guide](docs/developers_guide.md) for detail.
 
@@ -231,3 +231,7 @@ See [Examples & articles](docs/examples.md).
 * <a id="ref-3" href="#ref-3">[3]</a> Docker: https://www.docker.com/
 * <a id="ref-4" href="#ref-4">[4]</a> Podman: https://podman.io/
 * <a id="ref-5" href="#ref-5">[5]</a> Singularity: https://sylabs.io/singularity/
+
+# Credit
+
+This repository was forked from [multiarch/qemu-user-static](https://github.com/multiarch/qemu-user-static) to update qemu and to support new qemu CPU targets.
