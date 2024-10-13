@@ -19,8 +19,8 @@ jobs:
   qemu-user-static:
     runs-on: ubuntu-latest
     env:
-      VERSION: 9.0.2-1
-      ORIGIN_VERSION: 9.0.2+ds-1~bpo12+1
+      VERSION: 9.1.0-1
+      ORIGIN_VERSION: 9.1.0+ds-8
       DOCKER_REPO: docker.io/polyarch/qemu-user-static
     steps:
       - uses: actions/checkout@v2
@@ -29,8 +29,8 @@ jobs:
           echo "DOCKER_REPO=$DOCKER_REPO" >> $GITHUB_ENV
       - name: Build
         run: |
-          wget --content-disposition https://ftp.debian.org/debian/pool/main/q/qemu/qemu-user-static_${{ env.ORIGIN_VERSION }}_amd64.deb
-          dpkg-deb -R qemu-user-static_*.deb releases
+          wget --content-disposition https://ftp.debian.org/debian/pool/main/q/qemu/qemu-user_${{ env.ORIGIN_VERSION }}_amd64.deb
+          dpkg-deb -R qemu-user_*.deb releases
           ./run.sh -t "${{ env.VERSION }}" -r "${{ env.GITHUB_REPOSITORY }}" -d "${{ env.DOCKER_REPO }}"
      #- name: Test
      #  run: ./test.sh -d "${{ env.DOCKER_REPO }}"
