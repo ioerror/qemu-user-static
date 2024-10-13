@@ -19,9 +19,9 @@ jobs:
   qemu-user-static:
     runs-on: ubuntu-latest
     env:
-      VERSION: [9.0.2-1]
-      ORIGIN_VERSION: [9.0.2+ds-1~bpo12+1]
-      DOCKER_REPO: [docker.io/polyarch/qemu-user-static]
+      VERSION: 9.0.2-1
+      ORIGIN_VERSION: 9.0.2+ds-1~bpo12+1
+      DOCKER_REPO: docker.io/polyarch/qemu-user-static
     steps:
       - uses: actions/checkout@v2
       - name: Set variables
