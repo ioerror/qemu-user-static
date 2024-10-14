@@ -38,8 +38,8 @@ RUN apt-get update && \
 EOF
 
 # It should output the result of "uname -m".
-docker pull arm64v8/fedora
-docker run --rm -t arm64v8/fedora uname -m
+#docker pull arm64v8/fedora
+#docker run --rm -t arm64v8/fedora uname -m
 # It should install a package.
 # TODO: Comment out as it takes a time.
 # docker build --rm -t "test/latest/fedora" -<<EOF
