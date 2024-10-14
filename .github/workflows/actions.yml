@@ -19,21 +19,21 @@ jobs:
   qemu-user-static:
     runs-on: ubuntu-latest
     env:
-      VERSION: 9.1.0-8
-      ORIGIN_VERSION: 9.1.0+ds-8
+      VERSION: 7.2.0-1
+      ORIGIN_VERSION: 7.2+dfsg-7+deb12u7
       DOCKER_REPO: polyarch/qemu-user-static
     steps:
       - uses: actions/checkout@v2
       - name: Set variables
         run: |
-          echo "DOCKER_REPO=$DOCKER_REPO" >> $GITHUB_ENV
+          echo "DOCKER_REPO=docker.io/$DOCKER_REPO" >> $GITHUB_ENV
       - name: Build
         run: |
-          wget --content-disposition https://ftp.debian.org/debian/pool/main/q/qemu/qemu-user_${{ env.ORIGIN_VERSION }}_amd64.deb
-          dpkg-deb -v -R qemu-user_*.deb releases
+          wget --content-disposition https://ftp.debian.org/debian/pool/main/q/qemu/qemu-user-static_${{ env.ORIGIN_VERSION }}_amd64.deb
+          dpkg-deb -v -R qemu-user-static_*.deb releases
           ./run.sh -t "${{ env.VERSION }}" -r "${{ env.GITHUB_REPOSITORY }}" -d "${{ env.DOCKER_REPO }}"
-     #- name: Test
-     #  run: ./test.sh -d "${{ env.DOCKER_REPO }}"
+      - name: Test
+        run: ./test.sh -d "${{ env.DOCKER_REPO }}"
       - name: Publish
         if: github.ref == 'refs/heads/master'
         run: |
@@ -46,8 +46,8 @@ jobs:
           name: "v${{ env.VERSION }}"
           tag: "v${{ env.VERSION }}"
           body: |
-            # `qemu-*` @ ${{ env.VERSION }}
-          artifacts: "releases/usr/bin/*.tar.gz,releases/usr/bin/qemu-*"
+            # `qemu-*-static` @ ${{ env.VERSION }}
+          artifacts: "releases/usr/bin/*.tar.gz,releases/usr/bin/qemu-*-static"
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
