@@ -19,7 +19,7 @@ jobs:
   qemu-user-static:
     runs-on: ubuntu-latest
     env:
-      VERSION: 9.1.0-4
+      VERSION: 9.1.0-5
       ORIGIN_VERSION: 9.1.0+ds-8
       DOCKER_REPO: docker.io/polyarch/qemu-user-static
     steps:
