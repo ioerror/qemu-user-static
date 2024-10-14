@@ -19,7 +19,7 @@ jobs:
   qemu-user-static:
     runs-on: ubuntu-latest
     env:
-      VERSION: 9.1.0-2
+      VERSION: 9.1.0-3
       ORIGIN_VERSION: 9.1.0+ds-8
       DOCKER_REPO: docker.io/polyarch/qemu-user-static
     steps:
@@ -46,8 +46,8 @@ jobs:
           name: "v${{ env.VERSION }}"
           tag: "v${{ env.VERSION }}"
           body: |
-            # `qemu-*-static` @ ${{ env.VERSION }}
-          artifacts: "releases/usr/bin/*.tar.gz,releases/usr/bin/qemu-*-static"
+            # `qemu-*` @ ${{ env.VERSION }}
+          artifacts: "releases/usr/bin/*.tar.gz,releases/usr/bin/qemu-*"
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
