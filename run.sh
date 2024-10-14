@@ -54,7 +54,7 @@ do
             cp -p "${work_dir}/qemu-${to_arch}" "${out_dir}/latest/"
             cat > ${work_dir}/Dockerfile -<<EOF
 FROM scratch
-COPY qemu-${to_arch} /usr/bin/
+COPY qemu-${to_arch} /usr/libexec/qemu-binfmt/${to_arch}-binfmt-P
 EOF
             docker build -t ${DOCKER_REPO}:$from_arch-$to_arch-${TAG_VER} ${work_dir}
             for target in  "${DOCKER_REPO}:$from_arch-$to_arch" \
