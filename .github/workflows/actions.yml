@@ -19,8 +19,9 @@ jobs:
   qemu-user-static:
     runs-on: ubuntu-latest
     env:
-      VERSION: 9.0.2-2
-      ORIGIN_VERSION: 9.0.2+ds-1~bpo12+1
+      VERSION: 11.1.2-1
+      ORIGIN_VERSION: 11.1.2+ds-3
+      ORIGIN_SHA256: 4bacc2bf647f1756c5f08e7f146161d3eeef9d9f53e5d6412d1b3daca0c93655
       DOCKER_REPO: polyarch/qemu-user-static
     steps:
       - uses: actions/checkout@v4
@@ -29,8 +30,11 @@ jobs:
           echo "DOCKER_REPO=$DOCKER_REPO" >> $GITHUB_ENV
       - name: Build
         run: |
-          wget --content-disposition https://ftp.debian.org/debian/pool/main/q/qemu/qemu-user-static_${{ env.ORIGIN_VERSION }}_amd64.deb
-          dpkg-deb -v -R qemu-user-static_*.deb releases
+          wget -O qemu-user_${{ env.ORIGIN_VERSION }}_amd64.deb https://snapshot.debian.org/archive/debian/20261009T083023Z/pool/main/q/qemu/qemu-user_${{ env.ORIGIN_VERSION }}_amd64.deb
+          echo "${{ env.ORIGIN_SHA256 }}  qemu-user_${{ env.ORIGIN_VERSION }}_amd64.deb" | sha256sum -c -
+          dpkg-deb -v -R qemu-user_*.deb releases
+          for f in releases/usr/bin/qemu-*; do if [ -L "$f" ]; then cp --remove-destination "$(readlink -f "$f")" "$f"; fi; done
+          for f in releases/usr/bin/qemu-*; do mv "$f" "$f-static"; done
           ./run.sh -t "${{ env.VERSION }}" -r "${{ env.GITHUB_REPOSITORY }}" -d "${{ env.DOCKER_REPO }}"
       - name: Test
         run: |
