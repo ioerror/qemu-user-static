@@ -28,10 +28,10 @@ cat /proc/sys/fs/binfmt_misc/qemu-aarch64
 grep -q '^flags: F$' /proc/sys/fs/binfmt_misc/qemu-aarch64
 
 # It should output the result of "uname -m".
-docker pull arm64v8/ubuntu
-docker run --rm -t arm64v8/ubuntu uname -m
+docker pull --platform linux/arm64 arm64v8/ubuntu
+docker run --rm -t --platform linux/arm64 arm64v8/ubuntu uname -m
 # It should install a package.
-docker build --rm -t "test/latest/ubuntu" -<<EOF
+docker build --rm --platform linux/arm64 -t "test/latest/ubuntu" -<<EOF
 FROM arm64v8/ubuntu
 RUN apt-get update && \
     apt-get -y install gcc
@@ -68,8 +68,8 @@ docker run --rm -t ${DOCKER_REPO}:x86_64-aarch64 /usr/bin/qemu-aarch64-static --
 # ------------------------------------------------
 # Integration test
 docker build --rm -t "test/integration/ubuntu" -<<EOF
-FROM ${DOCKER_REPO}:x86_64-aarch64 as qemu
-FROM arm64v8/ubuntu
+FROM --platform=linux/amd64 ${DOCKER_REPO}:x86_64-aarch64 as qemu
+FROM --platform=linux/arm64 arm64v8/ubuntu
 COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
 EOF
-docker run --rm -t "test/integration/ubuntu" uname -m
+docker run --rm -t --platform linux/arm64 "test/integration/ubuntu" uname -m
